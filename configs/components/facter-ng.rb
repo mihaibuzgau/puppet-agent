@@ -18,7 +18,7 @@ component "facter-ng" do |pkg, settings, platform|
   end
 
   pkg.build do
-    ["#{settings[:host_gem]} build facter-ng.gemspec"]
+    ["#{settings[:host_gem]} build agent/facter-ng.gemspec"]
   end
 
   if platform.is_windows?
