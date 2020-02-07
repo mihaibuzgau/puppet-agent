@@ -21,7 +21,7 @@ component "facter-ng" do |pkg, settings, platform|
 
   pkg.build do
     [
-        %(#{platform[:sed]} -i "#{sed_pattern}" agent/facter-ng.gemspec),
+        %(#{platform[:sed]} -ie "#{sed_pattern}" agent/facter-ng.gemspec),
         "#{settings[:host_gem]} build agent/facter-ng.gemspec"
     ]
   end
