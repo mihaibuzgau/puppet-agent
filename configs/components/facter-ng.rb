@@ -17,8 +17,13 @@ component "facter-ng" do |pkg, settings, platform|
     pkg.environment "RUBYLIB", "#{settings[:ruby_vendordir]}:$(RUBYLIB)"
   end
 
+  sed_pattern = %(s/spec.required_ruby_version = '~> 2.3'/ /)
+
   pkg.build do
-    ["#{settings[:host_gem]} build agent/facter-ng.gemspec"]
+    [
+        %(#{platform[:sed]} -i "#{sed_pattern}" agent/facter-ng.gemspec),
+        "#{settings[:host_gem]} build agent/facter-ng.gemspec"
+    ]
   end
 
   if platform.is_windows?
