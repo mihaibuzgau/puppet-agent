@@ -17,11 +17,19 @@ component "facter-ng" do |pkg, settings, platform|
     pkg.environment "RUBYLIB", "#{settings[:ruby_vendordir]}:$(RUBYLIB)"
   end
 
-  sed_pattern = %(s/spec.required_ruby_version = '~> 2.3'/ /)
+  # Remove required_ruby_version from gemspec, this is needed for cross-compiled
+  # platforms as ruby version is lower than 2.3 on these platforms.
+  if platform.is_cross_compiled?
+    sed_pattern = %(s/spec.required_ruby_version = '~> 2.3'/ /)
+    pkg.build do
+      [
+          %(#{platform[:sed]} -ie "#{sed_pattern}" agent/facter-ng.gemspec)
+      ]
+    end
+  end
 
   pkg.build do
     [
-        %(#{platform[:sed]} -ie "#{sed_pattern}" agent/facter-ng.gemspec),
         "#{settings[:host_gem]} build agent/facter-ng.gemspec"
     ]
   end
