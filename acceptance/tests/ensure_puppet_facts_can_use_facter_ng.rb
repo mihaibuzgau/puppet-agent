@@ -1,4 +1,4 @@
-test_name 'PA-3114: Ensure puppet facts can use facter-ng' do
+test_name 'Ensure puppet facts can use facter-ng' do
 
   require 'puppet/acceptance/common_utils'
 

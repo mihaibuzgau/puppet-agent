@@ -1,5 +1,7 @@
 test_name 'PA-3114: Ensure facter-ng command can be executed' do
 
+  confine :to, :platform => /no-platform-yet/
+
   require 'puppet/acceptance/common_utils'
 
   facter_ng =  agent['platform'] =~ /win/ ? 'cmd /c facter-ng' : 'facter-ng'
